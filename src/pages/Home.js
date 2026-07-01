@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 
 // Components
-import Header from '../components/Header'
 import Banner from '../components/Banner'
 import Loader from '../components/Loader'
 
-const Home = () => {
-  const [loading, setLoading] = useState(true)
-
+const Home = ({ loading, setLoading }) => {
   return (
     <AnimateSharedLayout type='crossfade'>
       <AnimatePresence>
@@ -18,7 +15,6 @@ const Home = () => {
           </motion.div>
         ) : (
           <>
-            <Header />
             <Banner />
             {!loading && (
               <div className='transition-image final'>

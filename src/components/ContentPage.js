@@ -1,12 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import Header from './Header'
 import Marquee from './Marquee'
 import PageTransition from './PageTransition'
 
 const ContentPage = ({ eyebrow, lede, marqueeTitle, offerings }) => (
   <PageTransition>
-    <Header />
     <div className='page-intro'>
       <span className='page-eyebrow'>{eyebrow}</span>
       <motion.p

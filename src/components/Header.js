@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const navItems = [
   { to: "/design", label: "Design" },
@@ -31,7 +31,9 @@ const Header = () => {
         <nav className="nav">
           {navItems.map(({ to, label }) => (
             <li key={to}>
-              <Link to={to}>{label}</Link>
+              <NavLink to={to} activeClassName="active" exact>
+                {label}
+              </NavLink>
             </li>
           ))}
         </nav>
@@ -62,9 +64,9 @@ const Header = () => {
           >
             {navItems.map(({ to, label }) => (
               <li key={to}>
-                <Link to={to} onClick={closeMenu}>
+                <NavLink to={to} activeClassName="active" exact onClick={closeMenu}>
                   {label}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </motion.nav>
