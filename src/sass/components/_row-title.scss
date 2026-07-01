@@ -26,6 +26,12 @@
     letter-spacing: -0.8rem;
     display: inline-block;
     white-space: nowrap;
+    @media (max-width: $layout-breakpoint-medium) {
+      font-size: 18rem;
+    }
+    @media (max-width: 620px) {
+      font-size: 15rem;
+    }
     @media (max-width: $layout-breakpoint-xsmall) {
       font-size: 13rem;
     }
@@ -42,6 +48,9 @@
       &:last-child {
         display: none;
       }
+    }
+    @media (max-width: 620px) {
+      justify-content: flex-start;
     }
     @media (max-width: $layout-breakpoint-xsmall) {
       width: 100%;
