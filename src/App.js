@@ -1,39 +1,35 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import './sass/main.scss'
 
-// Components
-import Header from './components/Header'
-import Banner from './components/Banner'
-import Loader from './components/Loader'
+import Home from './pages/Home'
+import Design from './pages/Design'
+import Placeholder from './pages/Placeholder'
 
-function App () {
-  const [loading, setLoading] = useState(true)
+const AnimatedRoutes = () => {
+  const location = useLocation()
 
   return (
-    <AnimateSharedLayout type="crossfade">
-      <AnimatePresence>
-        {loading ? (
-          <motion.div key='loader'>
-            <Loader setLoading={setLoading} />
-          </motion.div>
-        ) : (
-          <>
-            <Header />
-            <Banner />
-            {!loading && (
-              <div className='transition-image final'>
-                <motion.img
-                  transition={{ ease: [0.6, 0.01, -0.05, 0.9], duration: 1.6 }}
-                  src={process.env.PUBLIC_URL + `/images/image-2.jpg`}
-                  layoutId='main-image-1'
-                />
-              </div>
-            )}
-          </>
-        )}
-      </AnimatePresence>
-    </AnimateSharedLayout>
+    <AnimatePresence exitBeforeEnter>
+      <Switch location={location} key={location.pathname}>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/design' component={Design} />
+        <Route exact path='/strategy' render={() => <Placeholder title='strategy' />} />
+        <Route exact path='/cases' render={() => <Placeholder title='cases' />} />
+        <Route exact path='/about' render={() => <Placeholder title='about' />} />
+        <Route exact path='/why' render={() => <Placeholder title='why us' />} />
+        <Route exact path='/contact' render={() => <Placeholder title='contact' />} />
+      </Switch>
+    </AnimatePresence>
+  )
+}
+
+function App () {
+  return (
+    <Router>
+      <AnimatedRoutes />
+    </Router>
   )
 }
 

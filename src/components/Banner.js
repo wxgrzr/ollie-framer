@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
+import AnimatedLetters from './AnimatedLetters'
+import Marquee from './Marquee'
 
 const banner = {
   animate: {
@@ -10,51 +12,15 @@ const banner = {
   }
 }
 
-const letterAni = {
-  initial: { y: 400 },
-  animate: {
-    y: 0,
-    transition: {
-      ease: [0.6, 0.01, -0.05, 0.95],
-      duration: 1
-    }
-  }
-}
 const Banner = () => {
-  const [playMarquee, setPlayMarquee] = useState(false)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setPlayMarquee(true)
-    }, 2000)
-  }, [])
-
   return (
     <motion.div variants={banner} className='banner'>
       <BannerRowTop title={'brand'} />
-      <BannerRowCenter title={'experience'} playMarquee={playMarquee} />
+      <Marquee title={'experience'} />
       <BannerRowBottom title={'studio'} />
     </motion.div>
   )
 }
-
-const AnimatedLetters = ({ title, disabled }) => (
-  <motion.span
-    className='row-title'
-    variants={disabled ? null : banner}
-    initial='initial'
-    animate='animate'
-  >
-    {[...title].map(letter => (
-      <motion.span
-        className='row-letter'
-        variants={disabled ? null : letterAni}
-      >
-        {letter}
-      </motion.span>
-    ))}
-  </motion.span>
-)
 
 const BannerRowTop = ({ title }) => {
   return (
@@ -114,19 +80,6 @@ const BannerRowBottom = ({ title }) => {
         </motion.span>
       </motion.div>
       <AnimatedLetters title={title} />
-    </div>
-  )
-}
-
-const BannerRowCenter = ({ title, playMarquee }) => {
-  return (
-    <div className={`banner-row marquee  ${playMarquee && 'animate'}`}>
-      <div className='marquee__inner'>
-        <AnimatedLetters title={title} disabled />
-        <AnimatedLetters title={title} />
-        <AnimatedLetters title={title} disabled />
-        <AnimatedLetters title={title} disabled />
-      </div>
     </div>
   )
 }

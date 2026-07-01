@@ -1,0 +1,78 @@
+.page-eyebrow {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $black;
+}
+
+.page-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 40px;
+  padding: 64px 108px 0;
+  @media (max-width: $layout-breakpoint-medium) {
+    padding: 48px 72px 0;
+  }
+  @media (max-width: $layout-breakpoint-xsmall) {
+    padding: 32px 12px 0;
+  }
+  .page-lede {
+    flex: 1 1 260px;
+    max-width: 460px;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 2.6rem;
+    color: $black;
+  }
+}
+
+.page-offer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+  padding: 96px 108px;
+  @media (max-width: $layout-breakpoint-medium) {
+    padding: 72px 72px;
+  }
+  @media (max-width: $layout-breakpoint-xsmall) {
+    padding: 48px 12px;
+  }
+  .page-eyebrow {
+    flex: 0 0 260px;
+  }
+  .offer-list {
+    flex: 1 1 320px;
+    min-width: 280px;
+    container-type: inline-size;
+  }
+  .offer-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba($black, 0.12);
+    &:last-child {
+      border-bottom: none;
+    }
+    @container (min-width: 620px) {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+    }
+  }
+  .offer-title {
+    font-size: 3.6rem;
+    font-weight: 600;
+    color: $black;
+  }
+  .offer-description {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: $gray;
+  }
+}
