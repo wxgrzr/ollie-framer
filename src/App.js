@@ -5,7 +5,10 @@ import './sass/main.scss'
 
 import Home from './pages/Home'
 import Design from './pages/Design'
-import Placeholder from './pages/Placeholder'
+import Strategy from './pages/Strategy'
+import About from './pages/About'
+import Why from './pages/Why'
+import Contact from './pages/Contact'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -15,11 +18,10 @@ const AnimatedRoutes = () => {
       <Switch location={location} key={location.pathname}>
         <Route exact path='/' component={Home} />
         <Route exact path='/design' component={Design} />
-        <Route exact path='/strategy' render={() => <Placeholder title='strategy' />} />
-        <Route exact path='/cases' render={() => <Placeholder title='cases' />} />
-        <Route exact path='/about' render={() => <Placeholder title='about' />} />
-        <Route exact path='/why' render={() => <Placeholder title='why us' />} />
-        <Route exact path='/contact' render={() => <Placeholder title='contact' />} />
+        <Route exact path='/strategy' component={Strategy} />
+        <Route exact path='/about' component={About} />
+        <Route exact path='/why' component={Why} />
+        <Route exact path='/contact' component={Contact} />
       </Switch>
     </AnimatePresence>
   )
