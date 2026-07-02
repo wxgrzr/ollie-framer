@@ -12,24 +12,30 @@ const banner = {
   }
 }
 
-const Banner = () => {
+const Banner = ({ skipIntro = false }) => {
   return (
-    <motion.div variants={banner} className='banner'>
-      <BannerRowTop title={'brand'} />
-      <Marquee title={'experience'} />
-      <BannerRowBottom title={'studio'} />
+    <motion.div
+      variants={skipIntro ? undefined : banner}
+      className='banner'
+      initial={skipIntro ? { opacity: 0, y: 24 } : undefined}
+      animate={skipIntro ? { opacity: 1, y: 0 } : undefined}
+      transition={skipIntro ? { ease: 'easeInOut', duration: 0.6, delay: 0.7 } : undefined}
+    >
+      <BannerRowTop title={'brand'} skipIntro={skipIntro} />
+      <Marquee title={'experience'} skipIntro={skipIntro} />
+      <BannerRowBottom title={'studio'} skipIntro={skipIntro} />
     </motion.div>
   )
 }
 
-const BannerRowTop = ({ title }) => {
+const BannerRowTop = ({ title, skipIntro }) => {
   return (
     <div className={'banner-row'}>
       <div className='row-col'>
-        <AnimatedLetters title={title} />
+        <AnimatedLetters title={title} disabled={skipIntro} />
       </div>
       <motion.div
-        initial={{ opacity: 0, y: 80 }}
+        initial={skipIntro ? false : { opacity: 0, y: 80 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
           ease: 'easeInOut',
@@ -47,17 +53,17 @@ const BannerRowTop = ({ title }) => {
   )
 }
 
-const BannerRowBottom = ({ title }) => {
+const BannerRowBottom = ({ title, skipIntro }) => {
   return (
     <div className={'banner-row center'}>
       <motion.div
         className='scroll'
-        initial={{ scale: 0 }}
+        initial={skipIntro ? false : { scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 1, delay: 1 }}
       >
         <motion.span
-          initial={{ opacity: 0 }}
+          initial={skipIntro ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
             ease: [0.6, 0.01, -0.05, 0.95],
@@ -68,7 +74,7 @@ const BannerRowBottom = ({ title }) => {
           scroll
         </motion.span>
         <motion.span
-          initial={{ opacity: 0 }}
+          initial={skipIntro ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
             ease: [0.6, 0.01, -0.05, 0.95],
@@ -79,7 +85,7 @@ const BannerRowBottom = ({ title }) => {
           down
         </motion.span>
       </motion.div>
-      <AnimatedLetters title={title} />
+      <AnimatedLetters title={title} disabled={skipIntro} />
     </div>
   )
 }
