@@ -1,39 +1,52 @@
 import React, { useState } from 'react'
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import './sass/main.scss'
 
-// Components
 import Header from './components/Header'
-import Banner from './components/Banner'
-import Loader from './components/Loader'
+import Home from './pages/Home'
+import Design from './pages/Design'
+import Strategy from './pages/Strategy'
+import About from './pages/About'
+import Why from './pages/Why'
+import Contact from './pages/Contact'
 
-function App () {
-  const [loading, setLoading] = useState(true)
+const AnimatedRoutes = ({ homeLoading, setHomeLoading }) => {
+  const location = useLocation()
 
   return (
-    <AnimateSharedLayout type="crossfade">
-      <AnimatePresence>
-        {loading ? (
-          <motion.div key='loader'>
-            <Loader setLoading={setLoading} />
-          </motion.div>
-        ) : (
-          <>
-            <Header />
-            <Banner />
-            {!loading && (
-              <div className='transition-image final'>
-                <motion.img
-                  transition={{ ease: [0.6, 0.01, -0.05, 0.9], duration: 1.6 }}
-                  src={process.env.PUBLIC_URL + `/images/image-2.jpg`}
-                  layoutId='main-image-1'
-                />
-              </div>
-            )}
-          </>
-        )}
-      </AnimatePresence>
-    </AnimateSharedLayout>
+    <AnimatePresence exitBeforeEnter>
+      <Switch location={location} key={location.pathname}>
+        <Route exact path='/' render={() => <Home loading={homeLoading} setLoading={setHomeLoading} />} />
+        <Route exact path='/design' component={Design} />
+        <Route exact path='/strategy' component={Strategy} />
+        <Route exact path='/about' component={About} />
+        <Route exact path='/why' component={Why} />
+        <Route exact path='/contact' component={Contact} />
+      </Switch>
+    </AnimatePresence>
+  )
+}
+
+const AppShell = ({ homeLoading, setHomeLoading }) => {
+  const location = useLocation()
+  const showHeader = location.pathname !== '/' || !homeLoading
+
+  return (
+    <>
+      {showHeader && <Header />}
+      <AnimatedRoutes homeLoading={homeLoading} setHomeLoading={setHomeLoading} />
+    </>
+  )
+}
+
+function App () {
+  const [homeLoading, setHomeLoading] = useState(true)
+
+  return (
+    <Router>
+      <AppShell homeLoading={homeLoading} setHomeLoading={setHomeLoading} />
+    </Router>
   )
 }
 

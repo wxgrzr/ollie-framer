@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
+import AnimatedLetters from './AnimatedLetters'
+import Marquee from './Marquee'
 
 const banner = {
   animate: {
@@ -10,60 +12,30 @@ const banner = {
   }
 }
 
-const letterAni = {
-  initial: { y: 400 },
-  animate: {
-    y: 0,
-    transition: {
-      ease: [0.6, 0.01, -0.05, 0.95],
-      duration: 1
-    }
-  }
-}
-const Banner = () => {
-  const [playMarquee, setPlayMarquee] = useState(false)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setPlayMarquee(true)
-    }, 2000)
-  }, [])
-
+const Banner = ({ skipIntro = false }) => {
   return (
-    <motion.div variants={banner} className='banner'>
-      <BannerRowTop title={'brand'} />
-      <BannerRowCenter title={'experience'} playMarquee={playMarquee} />
-      <BannerRowBottom title={'studio'} />
+    <motion.div
+      variants={skipIntro ? undefined : banner}
+      className='banner'
+      initial={skipIntro ? { opacity: 0, y: 24 } : undefined}
+      animate={skipIntro ? { opacity: 1, y: 0 } : undefined}
+      transition={skipIntro ? { ease: 'easeInOut', duration: 0.6, delay: 0.7 } : undefined}
+    >
+      <BannerRowTop title={'brand'} skipIntro={skipIntro} />
+      <Marquee title={'experience'} skipIntro={skipIntro} />
+      <BannerRowBottom title={'studio'} skipIntro={skipIntro} />
     </motion.div>
   )
 }
 
-const AnimatedLetters = ({ title, disabled }) => (
-  <motion.span
-    className='row-title'
-    variants={disabled ? null : banner}
-    initial='initial'
-    animate='animate'
-  >
-    {[...title].map(letter => (
-      <motion.span
-        className='row-letter'
-        variants={disabled ? null : letterAni}
-      >
-        {letter}
-      </motion.span>
-    ))}
-  </motion.span>
-)
-
-const BannerRowTop = ({ title }) => {
+const BannerRowTop = ({ title, skipIntro }) => {
   return (
     <div className={'banner-row'}>
       <div className='row-col'>
-        <AnimatedLetters title={title} />
+        <AnimatedLetters title={title} disabled={skipIntro} />
       </div>
       <motion.div
-        initial={{ opacity: 0, y: 80 }}
+        initial={skipIntro ? false : { opacity: 0, y: 80 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
           ease: 'easeInOut',
@@ -81,17 +53,17 @@ const BannerRowTop = ({ title }) => {
   )
 }
 
-const BannerRowBottom = ({ title }) => {
+const BannerRowBottom = ({ title, skipIntro }) => {
   return (
     <div className={'banner-row center'}>
       <motion.div
         className='scroll'
-        initial={{ scale: 0 }}
+        initial={skipIntro ? false : { scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 1, delay: 1 }}
       >
         <motion.span
-          initial={{ opacity: 0 }}
+          initial={skipIntro ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
             ease: [0.6, 0.01, -0.05, 0.95],
@@ -102,7 +74,7 @@ const BannerRowBottom = ({ title }) => {
           scroll
         </motion.span>
         <motion.span
-          initial={{ opacity: 0 }}
+          initial={skipIntro ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
             ease: [0.6, 0.01, -0.05, 0.95],
@@ -113,20 +85,7 @@ const BannerRowBottom = ({ title }) => {
           down
         </motion.span>
       </motion.div>
-      <AnimatedLetters title={title} />
-    </div>
-  )
-}
-
-const BannerRowCenter = ({ title, playMarquee }) => {
-  return (
-    <div className={`banner-row marquee  ${playMarquee && 'animate'}`}>
-      <div className='marquee__inner'>
-        <AnimatedLetters title={title} disabled />
-        <AnimatedLetters title={title} />
-        <AnimatedLetters title={title} disabled />
-        <AnimatedLetters title={title} disabled />
-      </div>
+      <AnimatedLetters title={title} disabled={skipIntro} />
     </div>
   )
 }
